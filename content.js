@@ -57,7 +57,6 @@ const aplicarScriptEmTodasTabelas = () => {
                 });
 
 
-                // tabela.parentElement.parentElement.querySelector('#left_info_tabela-extrato_top').textContent
                 const nomeTabelaElement = tabela.parentElement.parentElement.querySelector('#left_info_tabela-extrato_top').textContent.trim()
 
                 const linhas = tabela.querySelectorAll('tbody tr');
@@ -129,8 +128,17 @@ const aplicarScriptEmTodasTabelas = () => {
                     linha.appendChild(tdFaltaMeta);
                     linha.appendChild(tdCotasParaComprar);
 
-                    const valor = parseFloat(linha.querySelector('td:nth-child(7)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
-                    const precoFechamento = parseFloat(linha.querySelector('td:nth-child(6)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 1;
+                    let valor = parseFloat(linha.querySelector('td:nth-child(7)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+                    let precoFechamento = parseFloat(linha.querySelector('td:nth-child(6)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 1;
+                    
+
+                    if(nomeTabelaElement.replace(/\s+/g, '_') == 'EMPRÉSTIMO_DE_ATIVOS'){
+
+                        valor = parseFloat(linha.querySelector('td:nth-child(9)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 0;
+                        precoFechamento = parseFloat(linha.querySelector('td:nth-child(8)').textContent.replace('R$', '').replace('.', '').replace(',', '.')) || 1;
+                    }
+
+
 
                     const porcentagemAtual = ((valor / totalAcoes) * 100).toFixed(2);
                     tdPorcentagem.textContent = porcentagemAtual;
@@ -144,7 +152,12 @@ const aplicarScriptEmTodasTabelas = () => {
                     tdFaltaMeta.textContent = `R$ ${valorFaltante}`;
 
                     const cotasParaComprar = (valorFaltante / precoFechamento).toFixed(2);
-                    tdCotasParaComprar.textContent = cotasParaComprar;
+                    if (cotasParaComprar > 0){
+
+                        tdCotasParaComprar.textContent = Math.round(cotasParaComprar);
+                    }else{
+                        tdCotasParaComprar.textContent = ''
+                    }
 
                     // Centralizar as células de valores numéricos
                     [tdPorcentagem, tdPorcentagemFaltante, tdFaltaMeta, tdCotasParaComprar].forEach(td => {
