@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "Rebalanceamento B3 portfolio",
+    "version": "1.0",
+    "description": "Adiciona colunas de metas e aportes para facilitar seus aportes mensais, basta apenas colocar suas metas de cada ativo, simples e objetivo",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+        
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}
