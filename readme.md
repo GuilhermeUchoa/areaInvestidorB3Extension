@@ -7,7 +7,10 @@
 
 
 
+
 # Metas
 
 -[] Ajustar o preço de fechamento
 -[] Mais reatividade para a extensão
+
+
